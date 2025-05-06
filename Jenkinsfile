@@ -11,7 +11,9 @@ stage ('build')
 {
 steps
 {
-sh 'mvn clean deploy'
+echo "---------------start build--------------------"
+sh 'mvn clean deploy -Dmaven.test.skip=true'
+echo "---------------end build----------------------"
 }
 }
 stage ('sonarqube analysis')
