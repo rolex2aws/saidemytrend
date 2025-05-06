@@ -24,7 +24,7 @@ steps
 {
 with SonarQubeEnv ('sonarqube-server')
 {
-sh "${scannerHome}"/bin/sonar-scanner"
+sh "${scannerHome}/bin/sonar-scanner"
 }
 }
 }
