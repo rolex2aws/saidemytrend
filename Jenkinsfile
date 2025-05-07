@@ -45,7 +45,7 @@ stage("Jar Publish") {                // 14  // Creates a stage named 'Jar Publi
                           "files": [
                             {
                               "pattern": "jarstaging/(*)",
-                              "target": "rolex2aws-libs-release-local/{1}",
+                              "target": "rolex2aws-libs-release-local/{1}",                               
                               "flat": "false",
                               "props": "${properties}",
                               "exclusions": [ "*.sha1", "*.md5"]
@@ -68,5 +68,4 @@ stage("Jar Publish") {                // 14  // Creates a stage named 'Jar Publi
         }                  
 }
 }
-
-
+}
