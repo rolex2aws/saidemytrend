@@ -52,14 +52,7 @@ sh "${scannerHome}/bin/sonar-scanner"
                 }
             }
         }
-
-        stage('Publish Build Info') {
-            steps {
-                withArtifactory(serverId: 'jfrog-rolex2aws') {
-                  rtPublishBuildInfo()
-                }
-            }
-        }                  
+               
 }
 }
 
