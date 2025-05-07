@@ -37,10 +37,8 @@ stage("Jar Publish") {                // 14  // Creates a stage named 'Jar Publi
                 script {                      // 16  // Allows running custom Groovy script inside the pipeline
                     echo '<--------------- Jar Publish Started --------------->'  
                                               // Logs a message indicating the start of JAR publishing
-                    def server = Artifactory.newServer url: registry + "/artifactory", credentialsId: "jfrog-credentials"  
+                    def server = Artifactory.newServer url: "registry", credentialsId: "jfrog-credentials"  
                                               // Defines the Artifactory server with the specified URL and credentials
-                    def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}"  
-                                              // Sets properties like build ID and Git commit ID for the build
                     def uploadSpec = """{
                           "files": [
                             {
