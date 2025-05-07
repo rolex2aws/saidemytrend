@@ -32,27 +32,33 @@ sh "${scannerHome}/bin/sonar-scanner"
 }
 }
 
-           stage('Upload to Artifactory') {
-            steps {
-                // Requires Artifactory plugin to be installed in Jenkins
-                withArtifactory(serverId: 'jfrog-rolex2aws') { // Replace with your server ID
-                    rtUpload(
-                        spec: '''
-                        {
+stage("Jar Publish") {                // 14  // Creates a stage named 'Jar Publish'
+            steps {                           // 15  // Defines the steps that will be executed in this stage
+                script {                      // 16  // Allows running custom Groovy script inside the pipeline
+                    echo '<--------------- Jar Publish Started --------------->'  
+                                              // Logs a message indicating the start of JAR publishing
+                    def server = Artifactory.newServer url: registry + "/artifactory", credentialsId: "jfrog-credentials"  
+                                              // Defines the Artifactory server with the specified URL and credentials
+                    def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}"  
+                                              // Sets properties like build ID and Git commit ID for the build
+                    def uploadSpec = """{
                           "files": [
                             {
-                              "pattern": "jarstaging/(*)",  // Or your artifact pattern
-                              "target": "rolex2aws-libs-release-local/{1}"  // Your Artifactory path
+                              "pattern": "jarstaging/(*)",
+                              "target": "rolex2aws-libs-release-local/{1}",
+                              "flat": "false",
+                              "props": "${properties}",
                               "exclusions": [ "*.sha1", "*.md5"]
                             }
-                          ]
-                        }
-                        '''
-                    )
-                }
-            }
+                         ]
+                     }"""  
+                                              // Defines the upload specification for uploading JAR files to Artifactory
+                    def buildInfo = server.upload(uploadSpec)  
+                                              // Uploads the 
         }
                
+}
+}
 }
 }
 
